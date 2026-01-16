@@ -25,7 +25,11 @@ app.get('/', (req, res) => {
     res.send('TastyTwinkles API is running...');
 });
 
-// Start Server
-app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
-});
+// Start Server (Only if not running in serverless mode)
+if (require.main === module) {
+    app.listen(PORT, () => {
+        console.log(`Server running on port ${PORT}`);
+    });
+}
+
+module.exports = app;
