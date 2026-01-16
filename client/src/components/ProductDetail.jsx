@@ -22,7 +22,7 @@ const ProductDetail = () => {
     useEffect(() => {
         const fetchProduct = async () => {
             try {
-                const res = await axios.get(`http://localhost:5000/api/products/${id}`);
+                const res = await axios.get(`${import.meta.env.VITE_API_URL}/products/${id}`);
                 setProduct(res.data);
                 if (res.data.variants.length > 0) setSelectedWeight(res.data.variants[0]);
             } catch (err) {
@@ -59,7 +59,8 @@ const ProductDetail = () => {
         if (customPhoto) formData.append('customPhoto', customPhoto);
 
         try {
-            await axios.post('http://localhost:5000/api/orders', formData, {
+            // Send order data to backend
+            await axios.post(`${import.meta.env.VITE_API_URL}/orders`, formData, {
                 headers: { 'Content-Type': 'multipart/form-data' }
             });
             alert('Order placed successfully!');
@@ -100,8 +101,8 @@ const ProductDetail = () => {
                                 key={variant.weight}
                                 onClick={() => setSelectedWeight(variant)}
                                 className={`px-6 py-2 rounded-full border transition-all ${selectedWeight?.weight === variant.weight
-                                        ? 'bg-sage-green text-white border-sage-green shadow-md'
-                                        : 'bg-transparent text-gray-600 border-gray-300 hover:border-sage-green'
+                                    ? 'bg-sage-green text-white border-sage-green shadow-md'
+                                    : 'bg-transparent text-gray-600 border-gray-300 hover:border-sage-green'
                                     }`}
                             >
                                 {variant.weight} - ${variant.price}
