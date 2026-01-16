@@ -1,7 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const Order = require('../models/Order');
-const upload = require('multer')({ dest: 'uploads/' }); // Basic configuration
+const multer = require('multer');
+const upload = multer({ dest: '/tmp' }); // Use /tmp for Vercel
 
 // Create new order
 router.post('/', upload.single('customPhoto'), async (req, res) => {
